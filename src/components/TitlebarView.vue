@@ -16,7 +16,7 @@
 
 <style scoped>
 img {
-    max-height: 48px;
+    max-height: 40px;
 }
 .block {
     display: flex;
