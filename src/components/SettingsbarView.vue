@@ -23,15 +23,51 @@
 <script setup>
 import { ref } from 'vue';
 
-const selectedButtons = ref([
-    { index: 2, blockIndex: 0 }, // Default: Alphabet
+var selectedButtons = ref([
+    { index: 0, blockIndex: 0 }, // Default: random
     { index: 1, blockIndex: 1 }, // Default: Letters
     { index: 1, blockIndex: 2 }  // Default: 25
 ]);
 
 const selectButton = (index, blockIndex) => {
-    selectedButtons.value[blockIndex] = { index, blockIndex };
+    // If alphabet button is already selected in block index 0, prevent selections in other blocks
+    if (selectedButtons.value[0].index === 2 && blockIndex !== 0) {
+        return; // Do nothing if alphabet button is already selected
+    }
+
+    if (index === 2 && blockIndex === 0) {
+        // Update selectedButtons to have only the alphabet selected
+        selectedButtons.value = [
+            { index: 2, blockIndex: 0 }, // Default: Alphabet
+            { index: null, blockIndex: null }, // Default: Letters
+            { index: null, blockIndex: null }
+        ];
+    } else {
+        // Update the selected button as usual
+        selectedButtons.value[blockIndex] = { index, blockIndex };
+
+        // Populate null values with defaults if necessary
+        selectedButtons.value.forEach((button, i) => {
+            if (button.index === null) {
+                switch (i) {
+                    case 1:
+                        selectedButtons.value[i] = { index: 1, blockIndex: i }; // Default: Letters
+                        break;
+                    case 2:
+                        selectedButtons.value[i] = { index: 1, blockIndex: i }; // Default: 25
+                        break;
+                    // Add additional cases for other default values if needed
+                    default:
+                        break;
+                }
+            }
+        });
+    }
 };
+
+
+
+
 
 const isActive = (index, blockIndex) => {
     const selectedButton = selectedButtons.value[blockIndex];

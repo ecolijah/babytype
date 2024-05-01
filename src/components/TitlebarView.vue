@@ -7,9 +7,10 @@
         </div>
 
         <div>
-            <h5>profile</h5>
-            <h5>settings</h5>
-
+            <nav>
+                <RouterLink to="/">home</RouterLink>
+                <RouterLink to="/profile">profile</RouterLink>
+            </nav>
         </div>
     </div>
 </template>
@@ -29,5 +30,9 @@ img {
     width: 100%;
     /* background-color: yellowgreen; */
 
+}
+
+h1 {
+    font-weight: 500;
 }
 </style>

@@ -1,23 +1,16 @@
 <script setup>
-import TestView from './views/TestView.vue';
+// import TestView from './views/TestView.vue';
 </script>
 
 <template>
-  <!-- <header>
-    <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
+  <header>
 
     <div class="wrapper">
-      <HelloWorld msg="You did it!" />
 
-      <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
-      </nav>
     </div>
   </header>
 
-  <RouterView /> -->
-  <TestView></TestView>
+  <RouterView />
 </template>
 
 <style scoped>
@@ -56,7 +49,7 @@ nav a:first-of-type {
   border: 0;
 }
 
-@media (min-width: 1024px) {
+@media (min-width: 1824px) {
   header {
     display: flex;
     place-items: center;
