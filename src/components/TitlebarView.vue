@@ -8,8 +8,8 @@
 
         <div>
             <nav>
-                <RouterLink to="/">home</RouterLink>
-                <RouterLink to="/profile">profile</RouterLink>
+                <RouterLink to="/"><h3>home</h3></RouterLink>
+                <RouterLink to="/profile"><h3>profile</h3></RouterLink>
             </nav>
         </div>
     </div>
@@ -31,7 +31,14 @@ img {
     /* background-color: yellowgreen; */
 
 }
+nav {
+    display: flex;
 
+}
+h3 {
+    padding-right: 8px;
+    color: var(--gruv-titles);
+}
 h1 {
     font-weight: 500;
 }
