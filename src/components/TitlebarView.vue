@@ -2,14 +2,13 @@
     <div class="titlebar">
         <div class="block">
             <img src="/src/components/icons/icons8-babys-room-64.png"/>
-            <h1>babytype</h1>
+            <RouterLink to="/" style="text-decoration: none;" ><h1>babytype</h1></RouterLink>
 
         </div>
 
         <div>
             <nav>
-                <RouterLink to="/"><h3>home</h3></RouterLink>
-                <RouterLink to="/profile"><h3>profile</h3></RouterLink>
+                <RouterLink to="/profile" style="text-decoration: none;"><h3>profile</h3></RouterLink>
             </nav>
         </div>
     </div>
@@ -26,9 +25,7 @@ img {
 .titlebar {
     display: flex;
     justify-content: space-between;
-    color: var(--gruv-titles);
     width: 100%;
-    /* background-color: yellowgreen; */
 
 }
 nav {
@@ -41,5 +38,9 @@ h3 {
 }
 h1 {
     font-weight: 500;
+    color: var(--gruv-titles);
+
 }
+
+
 </style>
