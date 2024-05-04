@@ -2,10 +2,14 @@
   <div class="bigboy">
     <TitleBarView/>
     <SettingsbarView @settingsChanged="handleSettingsChanged"/>
-    <div class="char-container">
+    <div v-if=!testFinished class="char-container">
       <transition name="fade">
         <h1 :key="currentIndex" :class="{ correct: correctKeyPressed }">{{ currentCharacter }}</h1>
       </transition>
+    </div>
+    <div v-if=testFinished class="statscreen">
+      <h2>Mistakes: {{ numMissed }}</h2>
+      <p>press <span>Tab</span> to begin next test</p>
     </div>
   </div>
 </template>
@@ -21,21 +25,41 @@ const currentIndex = ref(0);
 const currentCharacter = ref(shuffledAlphabet[currentIndex.value]);
 const correctKeyPressed = ref(false);
 
+const testTime = ref(null);
+const testLength =  ref(26); //Defaults at 26 char of alphabet
+
+const testFinished =  ref(false);
+const numMissed = ref(0);
+
+
 const handleKeyDown = (event) => {
+  if (currentIndex.value === 0) {
+    numMissed.value = 0;
+  }
   if (event.key.toLowerCase() === currentCharacter.value) {
     correctKeyPressed.value = true;
+    if (currentIndex.value===25) {
+      testFinished.value = true;
+    } 
     setTimeout(() => {
+
       currentIndex.value = (currentIndex.value + 1) % shuffledAlphabet.length;
       currentCharacter.value = shuffledAlphabet[currentIndex.value];
       correctKeyPressed.value = false;
+
     }, 50); // Delay the change after 500ms to see the green color
   } else {
     correctKeyPressed.value = false;
+    numMissed.value +=1;
     // Add shake effect
     document.body.classList.add('shake');
     setTimeout(() => {
       document.body.classList.remove('shake');
     }, 50);
+  }
+
+  if (event.key === "Tab") {
+    testFinished.value = false;
   }
 };
 
@@ -48,20 +72,59 @@ onBeforeUnmount(() => {
 });
 
 const handleSettingsChanged = (selectedSettings) => {
+  console.log("handling settings changed.")
   // Check selected settings and render the appropriate list
+  //first index settings
   const alphabetMode = selectedSettings[0].index === 2;
+  const randomMode = selectedSettings[0].index === 0;
+
+  // const weakMode = selectedSettings[0].index === 1;
+
+  //2nd index settings
+  const timeMode = selectedSettings[1].index === 0;
+  const lettersMode = selectedSettings[1].index === 1;
+
+  //3rd index settings
+  const tenUnits = selectedSettings[2].index === 0;
+  const twentyFiveUnits = selectedSettings[2].index === 1;
+  const fiftyUnits = selectedSettings[2].index === 2;
+  const hundredUnits = selectedSettings[2].index === 3;
+
+
   if (alphabetMode) {
     // Render alphabet list
     shuffledAlphabet = originalAlphabet.split(''); // Reset shuffled alphabet to original alphabet
     currentIndex.value = 0; // Reset index
     currentCharacter.value = shuffledAlphabet[currentIndex.value];
-  } else {
+  }
+  if (randomMode) {
     // Shuffle the alphabet
     shuffledAlphabet = shuffleArray(shuffledAlphabet);
     // Start from the beginning of the shuffled alphabet
     currentIndex.value = 0;
     currentCharacter.value = shuffledAlphabet[currentIndex.value];
   }
+
+  //This is where we will handle the time/letters and value buttons
+  if (tenUnits){
+    testTime.value = 10; //Ten seconds
+    testLength.value = 10;
+  } 
+  if (twentyFiveUnits) {
+    testTime.value = 25;
+    testLength.value = 25;
+    
+  }
+  if (fiftyUnits) {
+    testTime.value = 50;
+    testLength.value = 50;
+    
+  }
+  if (hundredUnits) {
+    testTime.value = 100;
+    testLength.value = 100;
+  }
+
 };
 
 // Function to shuffle array elements
@@ -86,6 +149,25 @@ const shuffleArray = (array) => {
   display: flex;
   align-items: center;
   height: 70vh;
+}
+
+.statscreen {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  color: var(--gruv-h1);
+  height: 70vh;
+  /* background-color: #689D6A; */
+}
+
+.statscreen span {
+  color:  var(--gruv-background);
+  font-weight: 700;
+  background-color: var(--gruv-h1);
+  padding-left: 3px;
+  padding-right: 3px;
+  border-radius: 3px;
 }
 
 h1 {
