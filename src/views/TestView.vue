@@ -8,8 +8,7 @@
       </transition>
     </div>
     <div v-if=testFinished class="statscreen">
-      <h2>Mistakes: {{ numMissed }}</h2>
-      <p>press <span>Tab</span> to begin next test</p>
+      <ScoreView :accuracy="acc" />
     </div>
   </div>
 </template>
@@ -18,6 +17,7 @@
 import { ref, onMounted, onBeforeUnmount } from 'vue';
 import TitleBarView from "../components/TitlebarView.vue"
 import SettingsbarView from '../components/SettingsbarView.vue';
+import ScoreView from "../components/ScoreView.vue"
 
 const originalAlphabet = "abcdefghijklmnopqrstuvwxyz";
 let shuffledAlphabet = originalAlphabet.split(''); // Create a copy of the original alphabet array
@@ -30,16 +30,17 @@ const testLength =  ref(26); //Defaults at 26 char of alphabet
 
 const testFinished =  ref(false);
 const numMissed = ref(0);
+const acc = ref(0)
 
 
 const handleKeyDown = (event) => {
-  // if (currentIndex.value === 0) {
-  //   numMissed.value = 0;
-  // }
+
   if (event.key.toLowerCase() === currentCharacter.value && testFinished.value == false) {
     correctKeyPressed.value = true;
-    if (currentIndex.value===25) {
+    if (currentIndex.value===shuffledAlphabet.length-1) {
+      acc.value = Math.round((shuffledAlphabet.length - numMissed.value) / shuffledAlphabet.length * 100);
       testFinished.value = true;
+      console.log(acc.value)
     } 
     setTimeout(() => {
 
@@ -61,6 +62,7 @@ const handleKeyDown = (event) => {
   if (event.key === "Tab") {
     testFinished.value = false;
     currentIndex.value = 0;
+    numMissed.value = 0;
   }
 };
 
@@ -90,23 +92,7 @@ const handleSettingsChanged = (selectedSettings) => {
   const twentyFiveUnits = selectedSettings[2].index === 1;
   const fiftyUnits = selectedSettings[2].index === 2;
   const hundredUnits = selectedSettings[2].index === 3;
-
-
-  if (alphabetMode) {
-    // Render alphabet list
-    shuffledAlphabet = originalAlphabet.split(''); // Reset shuffled alphabet to original alphabet
-    currentIndex.value = 0; // Reset index
-    currentCharacter.value = shuffledAlphabet[currentIndex.value];
-  }
-  if (randomMode) {
-    // Shuffle the alphabet
-    shuffledAlphabet = shuffleArray(shuffledAlphabet);
-    // Start from the beginning of the shuffled alphabet
-    currentIndex.value = 0;
-    currentCharacter.value = shuffledAlphabet[currentIndex.value];
-  }
-
-  //This is where we will handle the time/letters and value buttons
+   //This is where we will handle the time/letters and value buttons
   if (tenUnits){
     testTime.value = 10; //Ten seconds
     testLength.value = 10;
@@ -125,6 +111,23 @@ const handleSettingsChanged = (selectedSettings) => {
     testTime.value = 100;
     testLength.value = 100;
   }
+
+  if (alphabetMode) {
+    // Render alphabet list
+    shuffledAlphabet = originalAlphabet.split(''); // Reset shuffled alphabet to original alphabet
+    currentIndex.value = 0; // Reset index
+    currentCharacter.value = shuffledAlphabet[currentIndex.value];
+  }
+  if (randomMode) {
+    // Shuffle the alphabet
+    shuffledAlphabet = shuffleArray(shuffledAlphabet);
+    // Start from the beginning of the shuffled alphabet
+    //use units to lengthen alphabet if necessary
+    currentIndex.value = 0;
+    currentCharacter.value = shuffledAlphabet[currentIndex.value];
+  }
+
+ 
 
 };
 
