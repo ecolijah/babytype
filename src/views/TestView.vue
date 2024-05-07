@@ -33,10 +33,10 @@ const numMissed = ref(0);
 
 
 const handleKeyDown = (event) => {
-  if (currentIndex.value === 0) {
-    numMissed.value = 0;
-  }
-  if (event.key.toLowerCase() === currentCharacter.value) {
+  // if (currentIndex.value === 0) {
+  //   numMissed.value = 0;
+  // }
+  if (event.key.toLowerCase() === currentCharacter.value && testFinished.value == false) {
     correctKeyPressed.value = true;
     if (currentIndex.value===25) {
       testFinished.value = true;
@@ -48,7 +48,7 @@ const handleKeyDown = (event) => {
       correctKeyPressed.value = false;
 
     }, 50); // Delay the change after 500ms to see the green color
-  } else {
+  } else if (testFinished.value == false) {
     correctKeyPressed.value = false;
     numMissed.value +=1;
     // Add shake effect
@@ -60,6 +60,7 @@ const handleKeyDown = (event) => {
 
   if (event.key === "Tab") {
     testFinished.value = false;
+    currentIndex.value = 0;
   }
 };
 
