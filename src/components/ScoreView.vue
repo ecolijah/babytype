@@ -4,14 +4,20 @@
           <h2>accuracy</h2>
           <h1>{{ accuracy}}%</h1>
       </div>
+
+      <div class="block">
+        <h2>missed</h2>
+        <!-- <h1> {{ missedmap }}</h1> -->
+        <h1 v-for="item in missedmap" :key="item">{{ item[0]}}</h1>
+      </div>
       
       <p>press <span>Tab</span> to begin next test</p>
 
     </div>
 </template>
 <script setup>
-const props = defineProps(['accuracy'])
-console.log(props.accuracy)
+const props = defineProps(['accuracy', 'missedmap'])
+console.log(props)
 </script>
 
 <style scoped>
@@ -19,10 +25,11 @@ console.log(props.accuracy)
   display: flex;
   align-items: center;
   /* flex-direction: column; */
+  flex-direction: row;
   justify-content: center;
   color: var(--gruv-h1);
   height: 70vh;
-  /* background-color: #689D6A; */
+  background-color: aliceblue;
 }
 
 .statscreen span {
@@ -36,8 +43,8 @@ console.log(props.accuracy)
 
 h1 {
   color: var(--gruv-accent);
-  font-size: 4.5em;
-  font-weight: 500;
+  font-size: 4em;
+  font-weight: 400;
   /* background-color: brown; */
 }
 h2 {
@@ -48,6 +55,7 @@ h2 {
 }
 .block {
   /* background-color: aliceblue; */
+  padding: 20px;
 }
 
 </style>

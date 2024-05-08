@@ -7,8 +7,9 @@
         <h1 :key="currentIndex" :class="{ correct: correctKeyPressed }">{{ currentCharacter }}</h1>
       </transition>
     </div>
-    <div v-if=testFinished class="statscreen">
-      <ScoreView :accuracy="acc" />
+    <div v-if=testFinished >
+      <ScoreView :accuracy="acc" :missedmap="missedMap"/>
+      
     </div>
   </div>
 </template>
@@ -32,6 +33,8 @@ const testFinished =  ref(false);
 const numMissed = ref(0);
 const acc = ref(0)
 
+const missedMap = new Map();
+
 
 const handleKeyDown = (event) => {
 
@@ -40,7 +43,7 @@ const handleKeyDown = (event) => {
     if (currentIndex.value===shuffledAlphabet.length-1) {
       acc.value = Math.round((shuffledAlphabet.length - numMissed.value) / shuffledAlphabet.length * 100);
       testFinished.value = true;
-      console.log(acc.value)
+      console.log(missedMap)
     } 
     setTimeout(() => {
 
@@ -52,6 +55,14 @@ const handleKeyDown = (event) => {
   } else if (testFinished.value == false) {
     correctKeyPressed.value = false;
     numMissed.value +=1;
+    //add to hashmap 
+    if (missedMap.has(currentCharacter.value)) {
+      var tmp = missedMap.get(currentCharacter.value)
+      missedMap.set(currentCharacter.value, tmp+1)
+    } else {
+      missedMap.set(currentCharacter.value, 1)
+    }
+
     // Add shake effect
     document.body.classList.add('shake');
     setTimeout(() => {
@@ -63,6 +74,7 @@ const handleKeyDown = (event) => {
     testFinished.value = false;
     currentIndex.value = 0;
     numMissed.value = 0;
+    missedMap.clear()
   }
 };
 
@@ -158,7 +170,7 @@ const shuffleArray = (array) => {
 .statscreen {
   display: flex;
   align-items: center;
-  flex-direction: column;
+  /* flex-direction: column; */
   justify-content: center;
   color: var(--gruv-h1);
   height: 70vh;
