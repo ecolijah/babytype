@@ -11,13 +11,10 @@
                 <!-- <h1> {{ missedmap }}</h1> -->
                 <h1 v-for="item in missedmap" :key="item">{{ item[0] }}</h1>
             </div>
-
-            
         </div>
         <div class="instructions">
             <p>press <span>Tab</span> to begin next test</p>
         </div>
-        
     </div>
 </template>
 <script setup>
@@ -26,7 +23,6 @@ console.log(props)
 </script>
 
 <style scoped>
-
 .stats-container {
     display: flex;
     flex-direction: column;
@@ -37,7 +33,7 @@ console.log(props)
 }
 .stats {
     display: flex;
-    align-items:flex-start;
+    align-items: flex-start;
     /* flex-direction: column; */
     flex-direction: row;
     justify-content: center;

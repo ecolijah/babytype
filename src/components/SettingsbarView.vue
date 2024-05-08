@@ -1,27 +1,35 @@
 <template>
-    <div class="settingsbar">
-        <div class="block">
-            <button :class="{ active: isActive(0, 0) }" @click="selectButton(0, 0)">
-                <h3>? random</h3>
-            </button>
-            <button :class="{ active: isActive(2, 0) }" @click="selectButton(2, 0)">
-                <h3>alphabet</h3>
-            </button>
+    <div class="container">
+        <div class="titlebar">
+            <div class="blockx">
+                <img src="/src/components/icons/icons8-babys-room-64.png" />
+                <RouterLink to="/" style="text-decoration: none"><h1>babytype</h1></RouterLink>
+            </div>
         </div>
+        <div class="settingsbar">
+            <div class="block">
+                <button :class="{ active: isActive(0, 0) }" @click="selectButton(0, 0)">
+                    <h3>? random</h3>
+                </button>
+                <button :class="{ active: isActive(2, 0) }" @click="selectButton(2, 0)">
+                    <h3>alphabet</h3>
+                </button>
+            </div>
 
-        <div class="block">
-            <button :class="{ active: isActive(0, 2) }" @click="selectButton(0, 2)">
-                <h3>10</h3>
-            </button>
-            <button :class="{ active: isActive(1, 2) }" @click="selectButton(1, 2)">
-                <h3>25</h3>
-            </button>
-            <button :class="{ active: isActive(2, 2) }" @click="selectButton(2, 2)">
-                <h3>50</h3>
-            </button>
-            <button :class="{ active: isActive(3, 2) }" @click="selectButton(3, 2)">
-                <h3>100</h3>
-            </button>
+            <div class="block">
+                <button :class="{ active: isActive(0, 2) }" @click="selectButton(0, 2)">
+                    <h3>10</h3>
+                </button>
+                <button :class="{ active: isActive(1, 2) }" @click="selectButton(1, 2)">
+                    <h3>25</h3>
+                </button>
+                <button :class="{ active: isActive(2, 2) }" @click="selectButton(2, 2)">
+                    <h3>50</h3>
+                </button>
+                <button :class="{ active: isActive(3, 2) }" @click="selectButton(3, 2)">
+                    <h3>100</h3>
+                </button>
+            </div>
         </div>
     </div>
 </template>
@@ -84,6 +92,13 @@ const isActive = (index, blockIndex) => {
 </script>
 
 <style scoped>
+
+.container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    width: 100%;
+}
 .settingsbar {
     display: flex;
     flex-direction: row;
@@ -113,6 +128,21 @@ h3 {
     color: var(--gruv-h1);
     padding-left: 8px;
     padding-right: 8px;
+}
+
+img {
+    max-height: 40px;
+}
+.blockx {
+    display: flex;
+    align-items: center;
+}
+.titlebar {
+    display: flex;
+}
+h1 {
+    font-weight: 500;
+    color: var(--gruv-titles);
 }
 
 button:hover h3 {

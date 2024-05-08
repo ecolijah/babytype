@@ -1,6 +1,6 @@
 <template>
     <div class="bigboy">
-        <TitleBarView />
+        <!-- <TitleBarView /> -->
         <SettingsbarView @settingsChanged="handleSettingsChanged" />
 
         <div class="test-container">
@@ -168,15 +168,16 @@ const shuffleArray = (array, desiredLength) => {
 <style scoped>
 .test-container {
     /* background-color: aliceblue;  */
-    width: 80%;
+    width: 100%;
     display: flex;
     height: 70vh;
     padding: 10px;
 }
 .status p {
     color: var(--gruv-h1);
-    padding: 1em;
+    padding-top: 2em;
     position: absolute;
+    font-size: 2em;
     /* background-color: blue; */
 }
 .status span {
@@ -185,7 +186,7 @@ const shuffleArray = (array, desiredLength) => {
 .status {
     background-color: blue;
     display: flex;
-    height: 100px;
+    /* height: 100px; */
 }
 
 .bigboy {
