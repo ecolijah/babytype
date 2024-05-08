@@ -1,2 +1,3 @@
-- red shake when incorrect key pressed
+- red shake when incorrect key pressed: done
 - theme switcher
+- transitions
