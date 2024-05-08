@@ -6,11 +6,10 @@
         <div class="test-container">
             <div v-if="!testFinished" class="status">
                 <p>
-                    <span>{{ currentIndex + 1 }}</span
-                    >/{{ testLength }}
+                    <span>{{ currentIndex }}</span>/{{ testLength }}
                 </p>
             </div>
-
+            
             <div v-if="!testFinished" class="char-container">
                 <transition name="fade">
                     <h1 :key="currentIndex" :class="{ correct: correctKeyPressed }">
@@ -28,7 +27,6 @@
 
 <script setup>
 import { ref, onMounted, onBeforeUnmount } from 'vue'
-import TitleBarView from '../components/TitlebarView.vue'
 import SettingsbarView from '../components/SettingsbarView.vue'
 import ScoreView from '../components/ScoreView.vue'
 
@@ -79,10 +77,11 @@ const handleKeyDown = (event) => {
         }
 
         // Add shake effect
-        document.body.classList.add('shake')
+        const charContainer = document.querySelector('.char-container');
+        charContainer.classList.add('shake');
         setTimeout(() => {
-            document.body.classList.remove('shake')
-        }, 50)
+            charContainer.classList.remove('shake');
+        }, 500);
     }
 
     if (event.key === 'Tab') {
@@ -226,6 +225,8 @@ const shuffleArray = (array, desiredLength) => {
 h1 {
     font-size: 7em;
     color: var(--gruv-h1);
+    text-shadow: 3px 3px 3px #00000017;
+
 }
 
 .fade-enter-active,
@@ -244,6 +245,9 @@ h1 {
 
 .shake {
     animation: shake 0.5s;
+}
+.shake h1 {
+    color: red;
 }
 
 @keyframes shake {

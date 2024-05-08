@@ -1,4 +1,2 @@
-- incorporate time and letters settings
-- stats screen
-- databse connection
-
+- red shake when incorrect key pressed
+- theme switcher

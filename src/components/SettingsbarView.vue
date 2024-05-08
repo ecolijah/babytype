@@ -92,12 +92,12 @@ const isActive = (index, blockIndex) => {
 </script>
 
 <style scoped>
-
 .container {
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
     width: 100%;
+    flex-wrap: wrap;
 }
 .settingsbar {
     display: flex;
@@ -107,6 +107,7 @@ const isActive = (index, blockIndex) => {
     align-items: center;
     border-radius: 10px;
     margin-top: 40px;
+    box-shadow: 4px 4px 10px 4px #0000000e;
     /* width: 50% */
 }
 
@@ -132,6 +133,7 @@ h3 {
 
 img {
     max-height: 40px;
+    padding-right: 2px;
 }
 .blockx {
     display: flex;
@@ -143,6 +145,7 @@ img {
 h1 {
     font-weight: 500;
     color: var(--gruv-titles);
+    text-shadow: 3px 3px 3px #00000017;
 }
 
 button:hover h3 {
@@ -152,5 +155,6 @@ button:hover h3 {
 
 button.active h3 {
     color: var(--gruv-accent);
+    text-shadow: 1px 1px 3px #00000017;
 }
 </style>
