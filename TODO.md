@@ -1,3 +1,5 @@
 - red shake when incorrect key pressed: done
+- cpm: done
 - theme switcher
 - transitions
+- turn off tab button

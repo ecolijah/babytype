@@ -6,29 +6,32 @@
                 <RouterLink to="/" style="text-decoration: none"><h1>babytype</h1></RouterLink>
             </div>
         </div>
-        <div class="settingsbar">
-            <div class="block">
-                <button :class="{ active: isActive(0, 0) }" @click="selectButton(0, 0)">
-                    <h3>? random</h3>
-                </button>
-                <button :class="{ active: isActive(2, 0) }" @click="selectButton(2, 0)">
-                    <h3>alphabet</h3>
-                </button>
+        <div class="settings">
+            <div class="settingsbar">
+                <div class="block">
+                    <button :class="{ active: isActive(0, 0) }" @click="selectButton(0, 0)">
+                        <h3>? random</h3>
+                    </button>
+                    <button :class="{ active: isActive(2, 0) }" @click="selectButton(2, 0)">
+                        <h3>alphabet</h3>
+                    </button>
+                </div>
             </div>
-
-            <div class="block">
-                <button :class="{ active: isActive(0, 2) }" @click="selectButton(0, 2)">
-                    <h3>10</h3>
-                </button>
-                <button :class="{ active: isActive(1, 2) }" @click="selectButton(1, 2)">
-                    <h3>25</h3>
-                </button>
-                <button :class="{ active: isActive(2, 2) }" @click="selectButton(2, 2)">
-                    <h3>50</h3>
-                </button>
-                <button :class="{ active: isActive(3, 2) }" @click="selectButton(3, 2)">
-                    <h3>100</h3>
-                </button>
+            <div class="settingsbar">
+                <div class="block">
+                    <button :class="{ active: isActive(0, 2) }" @click="selectButton(0, 2)">
+                        <h3>10</h3>
+                    </button>
+                    <button :class="{ active: isActive(1, 2) }" @click="selectButton(1, 2)">
+                        <h3>25</h3>
+                    </button>
+                    <button :class="{ active: isActive(2, 2) }" @click="selectButton(2, 2)">
+                        <h3>50</h3>
+                    </button>
+                    <button :class="{ active: isActive(3, 2) }" @click="selectButton(3, 2)">
+                        <h3>100</h3>
+                    </button>
+                </div>
             </div>
         </div>
     </div>
@@ -92,6 +95,13 @@ const isActive = (index, blockIndex) => {
 </script>
 
 <style scoped>
+
+.settings {
+    display: flex;
+    width: 70%;
+    justify-content: flex-end;
+
+}
 .container {
     display: flex;
     justify-content: space-between;
@@ -104,17 +114,20 @@ const isActive = (index, blockIndex) => {
     flex-direction: row;
     background-color: var(--gruv-back-layer);
     height: 40px;
+    /* width: 220px; */
     align-items: center;
     border-radius: 10px;
     margin-top: 40px;
     box-shadow: 4px 4px 10px 4px #0000000e;
+    margin-left: 10px;
+
     /* width: 50% */
 }
 
 .block {
     display: flex;
-    padding-left: 20px;
-    padding-right: 20px;
+    padding-left: 10px;
+    padding-right: 10px;
 }
 
 button {
@@ -129,6 +142,7 @@ h3 {
     color: var(--gruv-h1);
     padding-left: 8px;
     padding-right: 8px;
+
 }
 
 img {

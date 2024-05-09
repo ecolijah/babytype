@@ -2,14 +2,19 @@
     <div class="stats-container">
         <div class="stats">
             <div class="block">
-                <h2>accuracy</h2>
+                <h2>acc</h2>
                 <h1>{{ accuracy }}%</h1>
             </div>
 
             <div class="block">
-                <h2>missed</h2>
+                <h2 v-if="!perfect">miss</h2>
                 <!-- <h1> {{ missedmap }}</h1> -->
                 <h1 v-for="item in missedmap" :key="item">{{ item[0] }}</h1>
+            </div>
+
+            <div class="block">
+                <h2>cpm</h2>
+                <h1>{{ cpm }}</h1>
             </div>
         </div>
         <div class="instructions">
@@ -18,7 +23,9 @@
     </div>
 </template>
 <script setup>
-const props = defineProps(['accuracy', 'missedmap'])
+import { ref } from 'vue'
+const props = defineProps(['accuracy', 'missedmap', 'cpm'])
+const perfect = ref(props.missedmap.size === 0)
 console.log(props)
 </script>
 
@@ -34,12 +41,9 @@ console.log(props)
 .stats {
     display: flex;
     align-items: flex-start;
-    /* flex-direction: column; */
     flex-direction: row;
     justify-content: center;
     color: var(--gruv-h1);
-    /* height: 70vh; */
-    /* background-color: blue; */
     width: 100%;
 }
 .instructions {
@@ -58,17 +62,21 @@ span {
 
 h1 {
     color: var(--gruv-accent);
-    font-size: 4em;
-    font-weight: 400;
+    font-size: 3.5em;
+    font-weight: 500;
+    text-shadow: 3px 3px 3px #00000017;
+
     /* background-color: brown; */
 }
 h2 {
     font-weight: 400;
-    font-size: 2em;
+    font-size: 2.5em;
     margin: 0;
 }
 .block {
     /* background-color: aliceblue; */
     padding: 20px;
+    /* width: 14em; */
+    /* background-color: red; */
 }
 </style>

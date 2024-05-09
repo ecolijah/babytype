@@ -6,10 +6,11 @@
         <div class="test-container">
             <div v-if="!testFinished" class="status">
                 <p>
-                    <span>{{ currentIndex }}</span>/{{ testLength }}
+                    <span>{{ currentIndex }}</span
+                    >/{{ testLength }}
                 </p>
             </div>
-            
+
             <div v-if="!testFinished" class="char-container">
                 <transition name="fade">
                     <h1 :key="currentIndex" :class="{ correct: correctKeyPressed }">
@@ -19,7 +20,7 @@
             </div>
 
             <div style="width: 100%" v-if="testFinished">
-                <ScoreView :accuracy="acc" :missedmap="missedMap" />
+                <ScoreView :accuracy="acc" :missedmap="missedMap" :cpm="cpm" />
             </div>
         </div>
     </div>
@@ -47,18 +48,32 @@ const missedMap = new Map()
 const randomMode = ref(false)
 const alphabetMode = ref(true)
 
+//time variables
+let startTime = Date.now()
+let endTime = Date.now()
+
+const timeElapsed = ref(null)
+
+const cpm = ref(null)
+
 const handleKeyDown = (event) => {
     if (event.key.toLowerCase() === currentCharacter.value && testFinished.value == false) {
         correctKeyPressed.value = true
         if (currentIndex.value === 0) {
             //start timer
+            startTime = Date.now()
         }
         if (currentIndex.value === shuffledAlphabet.length - 1) {
             acc.value = Math.round(
                 ((shuffledAlphabet.length - numMissed.value) / shuffledAlphabet.length) * 100
             )
-            testFinished.value = true
             //stop timer
+            endTime = Date.now()
+
+            timeElapsed.value = endTime - startTime
+            cpm.value = Math.floor((shuffledAlphabet.length / (timeElapsed.value / 1000)) * 60)
+            //switch views
+            testFinished.value = true
         }
         setTimeout(() => {
             currentIndex.value = (currentIndex.value + 1) % shuffledAlphabet.length
@@ -77,11 +92,11 @@ const handleKeyDown = (event) => {
         }
 
         // Add shake effect
-        const charContainer = document.querySelector('.char-container');
-        charContainer.classList.add('shake');
+        const charContainer = document.querySelector('.char-container')
+        charContainer.classList.add('shake')
         setTimeout(() => {
-            charContainer.classList.remove('shake');
-        }, 500);
+            charContainer.classList.remove('shake')
+        }, 500)
     }
 
     if (event.key === 'Tab') {
@@ -174,7 +189,7 @@ const shuffleArray = (array, desiredLength) => {
 }
 .status p {
     color: var(--gruv-h1);
-    padding-top: 2em;
+    padding-top: 2.5em;
     position: absolute;
     font-size: 2em;
     /* background-color: blue; */
@@ -183,7 +198,7 @@ const shuffleArray = (array, desiredLength) => {
     color: var(--gruv-accent);
 }
 .status {
-    background-color: blue;
+    /* background-color: blue; */
     display: flex;
     /* height: 100px; */
 }
@@ -226,7 +241,6 @@ h1 {
     font-size: 7em;
     color: var(--gruv-h1);
     text-shadow: 3px 3px 3px #00000017;
-
 }
 
 .fade-enter-active,
@@ -239,6 +253,16 @@ h1 {
     opacity: 0;
 }
 
+.fade1-enter-active,
+.fade1-leave-active {
+    transition: opacity 0.3s ease-in-out;
+}
+
+.fade1-enter,
+.fade1-leave-to {
+    opacity: 0;
+}
+
 .correct {
     color: #689d6a;
 }
@@ -247,7 +271,7 @@ h1 {
     animation: shake 0.5s;
 }
 .shake h1 {
-    color: red;
+    color: rgb(240, 63, 63);
 }
 
 @keyframes shake {
