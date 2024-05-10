@@ -1,33 +1,28 @@
 <template>
     <div class="bigboy">
-        <!-- <TitleBarView /> -->
         <SettingsbarView @settingsChanged="handleSettingsChanged" />
-
         <div class="test-container">
-            <div v-if="!testFinished" class="status">
-                <p>
-                    <span>{{ currentIndex }}</span
-                    >/{{ testLength }}
-                </p>
-            </div>
-            <div v-if="!testFinished" class="char-container">
-                <transition name="fade">
-                    <h1 :key="currentIndex" :class="{ correct: correctKeyPressed }">
-                        {{ currentCharacter }}
-                    </h1>
-                </transition>
-            </div>
-            <div style="width: 100%" v-if="testFinished">
-                <ScoreView :accuracy="acc" :missedmap="missedMap" :cpm="cpm" />
-            </div>
+            <transition name="fade" mode="out-in">
+                <component
+                    :is="activeComponent"
+                    :accuracy="acc"
+                    :missedmap="missedMap"
+                    :cpm="cpm"
+                    :testLength="testLength"
+                    :currentIndex="currentIndex"
+                    :currentCharacter="currentCharacter"
+                    :correctKeyPressed="correctKeyPressed"
+                ></component>
+            </transition>
         </div>
     </div>
 </template>
 
 <script setup>
-import { ref, onMounted, onBeforeUnmount } from 'vue'
+import { ref, onMounted, onBeforeUnmount, shallowRef } from 'vue'
 import SettingsbarView from '../components/SettingsbarView.vue'
 import ScoreView from '../components/ScoreView.vue'
+import CharView from '../components/CharView.vue'
 
 const originalAlphabet = 'abcdefghijklmnopqrstuvwxyz'
 let shuffledAlphabet = originalAlphabet.split('') // Create a copy of the original alphabet array
@@ -54,6 +49,8 @@ const timeElapsed = ref(null)
 
 const cpm = ref(null)
 
+const activeComponent = shallowRef(CharView) //default
+
 const handleKeyDown = (event) => {
     if (event.key.toLowerCase() === currentCharacter.value && testFinished.value == false) {
         correctKeyPressed.value = true
@@ -72,6 +69,7 @@ const handleKeyDown = (event) => {
             cpm.value = Math.floor((shuffledAlphabet.length / (timeElapsed.value / 1000)) * 60)
             //switch views
             testFinished.value = true
+            activeComponent.value = ScoreView
         }
         setTimeout(() => {
             currentIndex.value = (currentIndex.value + 1) % shuffledAlphabet.length
@@ -103,6 +101,7 @@ const handleKeyDown = (event) => {
         currentIndex.value = 0
         numMissed.value = 0
         missedMap.clear()
+        activeComponent.value = CharView
 
         if (alphabetMode.value) {
             // Render alphabet list
@@ -180,7 +179,6 @@ const shuffleArray = (array, desiredLength) => {
 
 <style scoped>
 .test-container {
-    /* background-color: aliceblue;  */
     width: 100%;
     display: flex;
     height: 70vh;
@@ -244,21 +242,11 @@ h1 {
 
 .fade-enter-active,
 .fade-leave-active {
-    transition: opacity 0.3s ease-in-out;
+    transition: opacity 0.5s ease;
 }
 
 .fade-enter,
 .fade-leave-to {
-    opacity: 0;
-}
-
-.fade1-enter-active,
-.fade1-leave-active {
-    transition: opacity 0.3s ease-in-out;
-}
-
-.fade1-enter,
-.fade1-leave-to {
     opacity: 0;
 }
 

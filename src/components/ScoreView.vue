@@ -51,6 +51,7 @@ console.log(props.missedmap)
     align-items: center;
     justify-content: center;
     height: 70vh;
+    width: 100%;
     /* background-color: aliceblue; */
 }
 .stats {
