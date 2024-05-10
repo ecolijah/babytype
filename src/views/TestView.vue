@@ -76,7 +76,8 @@ const handleKeyDown = (event) => {
             currentCharacter.value = shuffledAlphabet[currentIndex.value]
             correctKeyPressed.value = false
         }, 50) // Delay the change after 500ms to see the green color
-    } else if (testFinished.value == false) {
+    } else if (testFinished.value == false && event.key !== 'Tab') {
+
         correctKeyPressed.value = false
         numMissed.value += 1
         //add to hashmap
@@ -181,7 +182,7 @@ const shuffleArray = (array, desiredLength) => {
 .test-container {
     width: 100%;
     display: flex;
-    height: 70vh;
+    height: 80vh;
     padding: 10px;
 }
 .status p {
@@ -189,15 +190,12 @@ const shuffleArray = (array, desiredLength) => {
     padding-top: 2.5em;
     position: absolute;
     font-size: 2em;
-    /* background-color: blue; */
 }
 .status span {
     color: var(--gruv-accent);
 }
 .status {
-    /* background-color: blue; */
     display: flex;
-    /* height: 100px; */
 }
 
 .bigboy {
@@ -210,19 +208,15 @@ const shuffleArray = (array, desiredLength) => {
     display: flex;
     align-items: center;
     justify-content: center;
-    /* height: 60vh; */
-    /* background-color: red; */
     width: 100%;
 }
 
 .statscreen {
     display: flex;
     align-items: center;
-    /* flex-direction: column; */
     justify-content: center;
     color: var(--gruv-h1);
     height: 70vh;
-    /* background-color: #689D6A; */
 }
 
 .statscreen span {
@@ -250,32 +244,5 @@ h1 {
     opacity: 0;
 }
 
-.correct {
-    color: #689d6a;
-}
 
-.shake {
-    animation: shake 0.5s;
-}
-.shake h1 {
-    color: var(--gruv-wrong);
-}
-
-@keyframes shake {
-    0% {
-        transform: translateX(0);
-    }
-    25% {
-        transform: translateX(-5px);
-    }
-    50% {
-        transform: translateX(5px);
-    }
-    75% {
-        transform: translateX(-5px);
-    }
-    100% {
-        transform: translateX(0);
-    }
-}
 </style>

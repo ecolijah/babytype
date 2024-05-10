@@ -97,8 +97,9 @@ const isActive = (index, blockIndex) => {
 <style scoped>
 .settings {
     display: flex;
-    width: 70%;
+    /* width: 70%; */
     justify-content: flex-end;
+    flex-wrap:wrap;
 }
 .container {
     display: flex;
@@ -112,14 +113,12 @@ const isActive = (index, blockIndex) => {
     flex-direction: row;
     background-color: var(--gruv-back-layer);
     height: 40px;
-    /* width: 220px; */
     align-items: center;
     border-radius: 10px;
     margin-top: 40px;
     box-shadow: 4px 4px 10px 4px #0000000e;
     margin-left: 10px;
 
-    /* width: 50% */
 }
 
 .block {

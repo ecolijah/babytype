@@ -13,6 +13,10 @@
                 </h1>
             </transition>
         </div>
+        <div class="instructions">
+            <p>press <span>Tab</span> to restart test</p>
+        </div>
+
     </div>
 </template>
 <script setup>
@@ -20,9 +24,28 @@ const props = defineProps(['currentIndex', 'testLength', 'currentCharacter', 'co
 </script>
 
 <style scoped>
+.instructions {
+    display: flex;
+    justify-content: center;
+    width:100%;
+    color: var(--gruv-h1);
+    padding-top: 40px;
+
+}
+
+.instructions span {
+    color: var(--gruv-background);
+    font-weight: 700;
+    background-color: var(--gruv-h1);
+    padding-left: 3px;
+    padding-right: 3px;
+    border-radius: 3px;
+}
 .container {
     display: flex;
-    /* background-color: aquamarine; */
+    flex-direction: column;
+    justify-content: space-around;
+    height: 100%;
     width: 100%;
 }
 .fade-enter-active,
@@ -41,25 +64,19 @@ h1 {
 }
 .status p {
     color: var(--gruv-h1);
-    padding-top: 2.5em;
-    position: absolute;
     font-size: 2em;
-    /* background-color: blue; */
 }
 .status span {
     color: var(--gruv-accent);
 }
 .status {
-    /* background-color: blue; */
     display: flex;
-    /* height: 100px; */
 }
 .char-container {
     display: flex;
     align-items: center;
     justify-content: center;
-    /* height: 60vh; */
-    /* background-color: red; */
+
     width: 100%;
 }
 .correct {

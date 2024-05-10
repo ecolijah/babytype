@@ -85,7 +85,6 @@ h1 {
     font-weight: 500;
     text-shadow: 3px 3px 3px #00000017;
 
-    /* background-color: brown; */
 }
 h2 {
     font-weight: 400;
