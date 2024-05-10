@@ -10,7 +10,6 @@
                     >/{{ testLength }}
                 </p>
             </div>
-
             <div v-if="!testFinished" class="char-container">
                 <transition name="fade">
                     <h1 :key="currentIndex" :class="{ correct: correctKeyPressed }">
@@ -18,7 +17,6 @@
                     </h1>
                 </transition>
             </div>
-
             <div style="width: 100%" v-if="testFinished">
                 <ScoreView :accuracy="acc" :missedmap="missedMap" :cpm="cpm" />
             </div>
@@ -100,6 +98,7 @@ const handleKeyDown = (event) => {
     }
 
     if (event.key === 'Tab') {
+        event.preventDefault()
         testFinished.value = false
         currentIndex.value = 0
         numMissed.value = 0
@@ -271,7 +270,7 @@ h1 {
     animation: shake 0.5s;
 }
 .shake h1 {
-    color: rgb(240, 63, 63);
+    color: var(--gruv-wrong);
 }
 
 @keyframes shake {

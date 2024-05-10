@@ -9,7 +9,12 @@
             <div class="block">
                 <h2 v-if="!perfect">miss</h2>
                 <!-- <h1> {{ missedmap }}</h1> -->
-                <h1 v-for="item in missedmap" :key="item">{{ item[0] }}</h1>
+                <div class="missed">
+                    <!-- <h1 v-for="item in missedmap" :key="item">{{ item[0]}},</h1> -->
+                    <h1 v-for="(item, index) in missedmap" :key="item">
+                        {{ item[0] }}<span v-if="index !== missedmap.size - 1">,</span>
+                    </h1>
+                </div>
             </div>
 
             <div class="block">
@@ -26,10 +31,20 @@
 import { ref } from 'vue'
 const props = defineProps(['accuracy', 'missedmap', 'cpm'])
 const perfect = ref(props.missedmap.size === 0)
-console.log(props)
+console.log(props.missedmap)
 </script>
 
 <style scoped>
+.missed {
+    display: flex;
+    flex-direction: row;
+}
+.missed span {
+    color: var(--gruv-h1);
+}
+.missed h1 {
+    color: var(--gruv-wrong);
+}
 .stats-container {
     display: flex;
     flex-direction: column;
@@ -44,14 +59,17 @@ console.log(props)
     flex-direction: row;
     justify-content: center;
     color: var(--gruv-h1);
-    width: 100%;
+    /* width: 100%; */
+    background-color: var(--gruv-back-layer);
+    border-radius: 10px;
+    box-shadow: 4px 4px 10px 4px #0000000e;
 }
 .instructions {
     color: var(--gruv-h1);
     padding-top: 40px;
 }
 
-span {
+.instructions span {
     color: var(--gruv-background);
     font-weight: 700;
     background-color: var(--gruv-h1);
@@ -74,9 +92,6 @@ h2 {
     margin: 0;
 }
 .block {
-    /* background-color: aliceblue; */
-    padding: 20px;
-    /* width: 14em; */
-    /* background-color: red; */
+    padding: 25px;
 }
 </style>

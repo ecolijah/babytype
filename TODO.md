@@ -2,4 +2,4 @@
 - cpm: done
 - theme switcher
 - transitions
-- turn off tab button
+- turn off tab button: done

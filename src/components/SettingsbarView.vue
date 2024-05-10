@@ -95,12 +95,10 @@ const isActive = (index, blockIndex) => {
 </script>
 
 <style scoped>
-
 .settings {
     display: flex;
     width: 70%;
     justify-content: flex-end;
-
 }
 .container {
     display: flex;
@@ -142,7 +140,6 @@ h3 {
     color: var(--gruv-h1);
     padding-left: 8px;
     padding-right: 8px;
-
 }
 
 img {
