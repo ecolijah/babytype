@@ -31,7 +31,7 @@
 import { ref } from 'vue'
 const props = defineProps(['accuracy', 'missedmap', 'cpm'])
 const perfect = ref(props.missedmap.size === 0)
-console.log(props.missedmap)
+// console.log(props.missedmap)
 </script>
 
 <style scoped>
@@ -84,7 +84,6 @@ h1 {
     font-size: 3.5em;
     font-weight: 500;
     text-shadow: 3px 3px 3px #00000017;
-
 }
 h2 {
     font-weight: 400;

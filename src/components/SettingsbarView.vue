@@ -12,6 +12,9 @@
                     <button :class="{ active: isActive(0, 0) }" @click="selectButton(0, 0)">
                         <h3>? random</h3>
                     </button>
+                    <button :class="{ active: isActive(1, 0) }" @click="selectButton(1, 0)">
+                        <h3>x weak</h3>
+                    </button>
                     <button :class="{ active: isActive(2, 0) }" @click="selectButton(2, 0)">
                         <h3>alphabet</h3>
                     </button>
@@ -40,7 +43,7 @@
 <script setup>
 import { ref } from 'vue'
 const emit = defineEmits(['settingsChanged'])
-
+const props = defineProps(['numTests', 'weakness'])
 var selectedButtons = ref([
     { index: 2, blockIndex: 0 }, // Default: random
     { index: null, blockIndex: null }, // Default: Letters
@@ -51,6 +54,18 @@ const selectButton = (index, blockIndex) => {
     // If alphabet button is already selected in block index 0, prevent selections in other blocks
     if (selectedButtons.value[0].index === 2 && blockIndex !== 0) {
         return // Do nothing if alphabet button is already selected
+    }
+
+    if (index === 1 && blockIndex === 0 && props.numTests < 5) {
+        // "x weak" button selected with numTests less than 5, show popup
+        alert(`You have ${5 - props.numTests} tests remaining to access weak mode.`)
+        return
+    }
+
+    if (index === 1 && blockIndex === 0 && props.weakness.size < 3) {
+        // "x weak" button selected with numTests less than 5, show popup
+        alert(`Calibrate a bit more, please.`)
+        return
     }
 
     if (index === 2 && blockIndex === 0) {
@@ -99,7 +114,7 @@ const isActive = (index, blockIndex) => {
     display: flex;
     /* width: 70%; */
     justify-content: flex-end;
-    flex-wrap:wrap;
+    flex-wrap: wrap;
 }
 .container {
     display: flex;
@@ -118,7 +133,6 @@ const isActive = (index, blockIndex) => {
     margin-top: 40px;
     box-shadow: 4px 4px 10px 4px #0000000e;
     margin-left: 10px;
-
 }
 
 .block {

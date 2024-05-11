@@ -16,7 +16,6 @@
         <div class="instructions">
             <p>press <span>Tab</span> to restart test</p>
         </div>
-
     </div>
 </template>
 <script setup>
@@ -27,10 +26,9 @@ const props = defineProps(['currentIndex', 'testLength', 'currentCharacter', 'co
 .instructions {
     display: flex;
     justify-content: center;
-    width:100%;
+    width: 100%;
     color: var(--gruv-h1);
     padding-top: 40px;
-
 }
 
 .instructions span {

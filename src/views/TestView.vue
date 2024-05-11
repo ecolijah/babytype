@@ -1,6 +1,10 @@
 <template>
     <div class="bigboy">
-        <SettingsbarView @settingsChanged="handleSettingsChanged" />
+        <SettingsbarView
+            :weakness="weakness"
+            :num-tests="numTests"
+            @settingsChanged="handleSettingsChanged"
+        />
         <div class="test-container">
             <transition name="fade" mode="out-in">
                 <component
@@ -40,6 +44,7 @@ const missedMap = new Map()
 
 const randomMode = ref(false)
 const alphabetMode = ref(true)
+const weakMode = ref(false)
 
 //time variables
 let startTime = Date.now()
@@ -48,8 +53,11 @@ let endTime = Date.now()
 const timeElapsed = ref(null)
 
 const cpm = ref(null)
-
+const numTests = ref(0)
 const activeComponent = shallowRef(CharView) //default
+
+//weakness in browserr mem
+const weakness = new Map()
 
 const handleKeyDown = (event) => {
     if (event.key.toLowerCase() === currentCharacter.value && testFinished.value == false) {
@@ -69,7 +77,9 @@ const handleKeyDown = (event) => {
             cpm.value = Math.floor((shuffledAlphabet.length / (timeElapsed.value / 1000)) * 60)
             //switch views
             testFinished.value = true
+            numTests.value += 1
             activeComponent.value = ScoreView
+            console.log(weakness)
         }
         setTimeout(() => {
             currentIndex.value = (currentIndex.value + 1) % shuffledAlphabet.length
@@ -77,7 +87,6 @@ const handleKeyDown = (event) => {
             correctKeyPressed.value = false
         }, 50) // Delay the change after 500ms to see the green color
     } else if (testFinished.value == false && event.key !== 'Tab') {
-
         correctKeyPressed.value = false
         numMissed.value += 1
         //add to hashmap
@@ -86,6 +95,13 @@ const handleKeyDown = (event) => {
             missedMap.set(currentCharacter.value, tmp + 1)
         } else {
             missedMap.set(currentCharacter.value, 1)
+        }
+
+        if (weakness.has(currentCharacter.value)) {
+            var tmp2 = weakness.get(currentCharacter.value)
+            weakness.set(currentCharacter.value, tmp2 + 1)
+        } else {
+            weakness.set(currentCharacter.value, 1)
         }
 
         // Add shake effect
@@ -107,17 +123,21 @@ const handleKeyDown = (event) => {
         if (alphabetMode.value) {
             // Render alphabet list
             shuffledAlphabet = originalAlphabet.split('') // Reset shuffled alphabet to original alphabet
-            currentIndex.value = 0 // Reset index
-            currentCharacter.value = shuffledAlphabet[currentIndex.value]
         }
         if (randomMode.value) {
             // Shuffle the alphabet
-            shuffledAlphabet = shuffleArray(shuffledAlphabet, testLength.value)
+
+            shuffledAlphabet = shuffleArray(originalAlphabet.split(''), testLength.value)
             // Start from the beginning of the shuffled alphabet
             //use units to lengthen alphabet if necessary
-            currentIndex.value = 0
-            currentCharacter.value = shuffledAlphabet[currentIndex.value]
         }
+        if (weakMode.value) {
+            //weak shuffle logic here
+            var tmpList = mapToList(weakness)
+            shuffledAlphabet = shuffleArray(tmpList, testLength.value)
+        }
+        currentIndex.value = 0
+        currentCharacter.value = shuffledAlphabet[currentIndex.value]
     }
 }
 
@@ -133,6 +153,7 @@ const handleSettingsChanged = (selectedSettings) => {
     console.log('handling settings changed.')
 
     alphabetMode.value = selectedSettings[0].index === 2
+    weakMode.value = selectedSettings[0].index === 1
     randomMode.value = selectedSettings[0].index === 0
 
     const unitsMap = new Map([
@@ -149,11 +170,30 @@ const handleSettingsChanged = (selectedSettings) => {
         testLength.value = 26
     }
     if (randomMode.value) {
-        shuffledAlphabet = shuffleArray(shuffledAlphabet, testLength.value)
+        shuffledAlphabet = shuffleArray(originalAlphabet.split(''), testLength.value)
+    }
+    if (weakMode.value) {
+        //weak shuffle logic here
+        var tmpList = mapToList(weakness)
+        shuffledAlphabet = shuffleArray(tmpList, testLength.value)
     }
 
     currentIndex.value = 0
     currentCharacter.value = shuffledAlphabet[currentIndex.value]
+    testFinished.value = false
+    numMissed.value = 0
+    missedMap.clear()
+    activeComponent.value = CharView
+}
+
+function mapToList(map) {
+    const result = []
+    map.forEach((value, key) => {
+        for (let i = 0; i < value; i++) {
+            result.push(key)
+        }
+    })
+    return result
 }
 
 // Function to shuffle array elements
@@ -243,6 +283,4 @@ h1 {
 .fade-leave-to {
     opacity: 0;
 }
-
-
 </style>
