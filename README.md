@@ -16,15 +16,10 @@ cd babytype
 npm install
 ```
 
-### Compile and Hot-Reload for Development
+### Compile 
 
 ```sh
 npm run dev
 ```
 
-### Compile and Minify for Production
-
-```sh
-npm run build
-```
 
