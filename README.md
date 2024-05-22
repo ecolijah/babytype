@@ -9,6 +9,10 @@ Simple tool to help with typing fundamentals.
 ### Project Setup
 
 ```sh
+git clone https://github.com/ecolijah/babytype.git
+cd babytype
+```
+```sh
 npm install
 ```
 
