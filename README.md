@@ -3,7 +3,10 @@
 Simple tool to help with typing fundamentals.
 [Site is Live!](https://babytype.xyz)
 
-## Project Setup
+
+## run locally: 
+
+###Project Setup
 
 ```sh
 npm install
