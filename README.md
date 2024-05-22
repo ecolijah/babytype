@@ -6,7 +6,7 @@ Simple tool to help with typing fundamentals.
 
 ## run locally: 
 
-###Project Setup
+### Project Setup
 
 ```sh
 npm install
